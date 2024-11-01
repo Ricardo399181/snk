@@ -5,7 +5,7 @@ on:
     - cron: '0 0 * * *'  # Executa todos os dias à meia-noite
   push:
     branches:
-      - main  
+      - main  # Substitua pelo nome do seu branch principal, se necessário
 
 jobs:
   update-snake:
@@ -14,16 +14,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Update snake
-        uses: Platane/snk@master
+      - name: Generate Snake Animation
+        uses: Platane/snk@v3
         with:
-          github_user: 'Ricardo399181'  # Seu nome de usuário do GitHub
-          svg_out: 'github-contribution-grid-snake.svg'
+          github_user_name: 'Ricardo399181'  
+          outputs: |
+            dist/github-snake.svg
+            dist/github-snake-dark.svg?palette=github-dark
+            dist/ocean.gif?color_snake=orange&color_dots=#bfd6f6,#8dbdff,#64a1f4,#4b91f1,#3c7dd9
       
-      - name: Commit and push
+      - name: Commit and Push
         run: |
           git config --local user.email "pauloricardo399181@gmail.com"  
-          git config --local user.name "Ricardo ferreira" 
-          git add github-contribution-grid-snake.svg
+          git config --local user.name "Ricardo ferreira"  
+          git add dist/github-snake.svg dist/github-snake-dark.svg
           git commit -m "Update snake animation"
           git push
